@@ -87,5 +87,6 @@ export const filterFunction = async (body: any) => {
     return { 
                 conditionValue,  
                 relationValue: relationValue || {}, 
-                sortingValue: sortingValue || {}}
+                sortingValue: sortingValue || {}
+            }
 }
