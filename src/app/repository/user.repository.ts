@@ -11,6 +11,14 @@ export class UserRepository{
         private readonly userRepository: Repository<User>
     ){}
 
+    async findByUsername(username: string){
+        try{
+            return await this.userRepository.findOne({where: {username: username}})
+        }catch(err){
+            throw new InternalServerErrorException(err.message + err?.query);
+        }
+    }
+
     async findData(body: any){
         try{
             const {conditionValue, relationValue, sortingValue} = await filterFunction(body)
