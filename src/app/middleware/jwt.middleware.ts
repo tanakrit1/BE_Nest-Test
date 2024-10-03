@@ -12,7 +12,7 @@ export class JwtAuthMiddleware implements NestMiddleware {
         if (authHeader && authHeader.startsWith('Bearer ')) {
             try {
                 const [type, token] = authHeader?.split(' ')
-                const payload = await this.jwtService.verifyAsync(token, { secret: process.env.APP_JWT_KEY });
+                const payload = await this.jwtService.verifyAsync(token, { secret: process.env.APP_JWT_SIGNATURE });
                 request['user'] = payload
             } catch (err) {
                 throw new UnauthorizedException()
