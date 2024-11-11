@@ -3,6 +3,7 @@ import { CreateUserDto, SearchUserDto } from "../dto/user.dto";
 import { UserService } from "../service/user.service";
 import { AuthService } from "../service/auth.service";
 import { ApiTags } from "@nestjs/swagger";
+import { PaginationVm } from "../view-model/pagination.vm";
 
 @ApiTags('User')
 @Controller('user')
@@ -14,7 +15,14 @@ export class UserContoller {
     
     @Post('search')
     async search(@Body() dto: SearchUserDto){
-        return await this.userService.search(dto)
+        const result = await this.userService.search(dto)
+        const pagination = {
+            page: Number(dto.page),
+            limit: Number(dto.limit),
+            totalItems: Number(result.totalItem)
+        }
+        const response = PaginationVm.convertToVm(result.data, pagination)
+        return response
     }
 
     @Post()
